@@ -4,362 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Geo-Politics 2026</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-
 <style>
-/* V89.6 UNIVERSAL STYLE */
-:root { 
-    --bg-color: #000000; --card-bg: #121212; 
-    --accent-gold: #ffcc00; --hint-blue: #4dabf7; --err-red: #ff4d4d;
-    --font-ui: 'Outfit', sans-serif; 
-    --font-serif: 'Libre Baskerville', serif; 
-    --font-code: 'JetBrains Mono', monospace; 
-}
-
+/* V91.0 MODULAR CSS */
+:root { --bg-color: #000000; --card-bg: #121212; --accent-gold: #ffcc00; --hint-blue: #4dabf7; --font-ui: 'Outfit', sans-serif; --font-serif: 'Libre Baskerville', serif; --font-code: 'JetBrains Mono', monospace; }
 * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-body { 
-    margin: 0; height: 100vh; background: var(--bg-color); color: #fff; 
-    font-family: var(--font-ui); overflow: hidden; 
-    touch-action: none; user-select: none; -webkit-user-select: none;
-}
-
+body { margin: 0; height: 100vh; background: var(--bg-color); color: #fff; font-family: var(--font-ui); overflow: hidden; touch-action: none; user-select: none; }
 #header { width: 90%; margin: calc(20px + env(safe-area-inset-top)) auto 0; pointer-events: none; z-index: 10; position: relative; }
-.header-meta { display: flex; justify-content: space-between; font-family: var(--font-code); font-size: 0.75rem; color: #666; margin-bottom: 8px; letter-spacing: 0.5px; }
-.progress-track { width: 100%; height: 4px; background: #222; border-radius: 4px; }
-#progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.4s ease; box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); }
-
-#stack { position: relative; width: 90%; max-width: 400px; height: calc(100vh - 160px - env(safe-area-inset-top)); margin: 20px auto 0; perspective: 1200px; }
-
-.card { 
-    position: absolute; width: 100%; height: 100%; 
-    background: var(--card-bg); border-radius: 24px; border: 1px solid #333; 
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transform-origin: center center; box-shadow: 0 25px 50px rgba(0,0,0,0.95); will-change: transform; 
-    padding: 25px; touch-action: none;
-}
-
-.card-q { 
-    font-family: var(--font-serif); 
-    font-size: clamp(1.2rem, 4.5vw, 1.6rem); 
-    line-height: 1.5; font-weight: 700; text-align: center; color: #e0e0e0;
-    width: 100%; word-wrap: break-word; 
-}
-
-.swipe-label { 
-    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    background: rgba(0,0,0,0.96); font-family: var(--font-ui); font-weight: 900; font-size: 2rem; 
-    text-transform: uppercase; border-radius: 24px; opacity: 0; pointer-events: none; z-index:100; letter-spacing: 2px; text-align:center; padding: 20px;
-}
-.sl-down-hint { 
-    color: var(--hint-blue) !important; font-size: 1.4rem !important; text-transform: none !important; 
-    font-family: var(--font-serif) !important; background: rgba(10, 10, 10, 0.98) !important; line-height: 1.6 !important;
-}
+.header-meta { display: flex; justify-content: space-between; font-family: var(--font-code); font-size: 0.75rem; color: #666; margin-bottom: 8px; }
+#progress-bar { height: 4px; background: var(--accent-gold); width: 0%; transition: width 0.4s ease; box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); border-radius: 4px; }
+#stack { position: relative; width: 92%; max-width: 400px; height: calc(100vh - 160px - env(safe-area-inset-top)); margin: 25px auto 0; perspective: 1200px; }
+.card { position: absolute; width: 100%; height: 100%; background: var(--card-bg); border-radius: 32px; border: 1px solid #333; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 25px 60px rgba(0,0,0,0.9); will-change: transform; padding: 30px; }
+.card-q { font-family: var(--font-serif); font-size: clamp(1.3rem, 5vw, 1.8rem); font-weight: 700; text-align: center; color: #e0e0e0; width: 100%; word-wrap: break-word; }
+.swipe-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.96); font-family: var(--font-ui); font-weight: 900; font-size: 2.2rem; text-transform: uppercase; border-radius: 32px; opacity: 0; pointer-events: none; z-index:100; padding: 20px; text-align: center; }
+.sl-down-hint { color: var(--hint-blue) !important; font-size: 1.4rem !important; text-transform: none !important; font-family: var(--font-serif) !important; }
 .hint-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
-
-.menu-container { position: absolute; inset: 0; padding: 20px; pointer-events: none; }
-.menu-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%; }
-.menu-opt { position: absolute; font-family: var(--font-ui); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: #666; transition: color 0.2s; }
-
-.opt-top { top: 25px; left: 0; right: 0; text-align: center; color: var(--accent-gold); }
-.opt-bottom { bottom: 25px; left: 0; right: 0; text-align: center; color: var(--hint-blue); }
-.opt-left { top: 50%; left: 25px; transform: translateY(-50%); text-align: left; }
-.opt-right { top: 50%; right: 25px; transform: translateY(-50%); text-align: right; }
-
-#analysis-modal { position: absolute; inset: 0; background: #000; z-index: 2000; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding-top: env(safe-area-inset-top); }
-#analysis-modal.active { opacity: 1; pointer-events: auto; }
-.analysis-header { padding: 20px; text-align: center; border-bottom: 1px solid #333; font-family: var(--font-ui); color: var(--accent-gold); font-weight: 900; letter-spacing: 2px; }
-.analysis-scroll { flex: 1; overflow-y: auto; padding: 20px; }
-.mistake-card { background: #111; border: 1px solid #333; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-.mistake-q { font-family: var(--font-serif); font-size: 1.1rem; color: #fff; margin-bottom: 10px; }
-.mistake-ans { font-family: var(--font-code); font-size: 0.8rem; color: var(--err-red); margin-bottom: 10px; text-transform: uppercase; }
-.mistake-exp { font-family: var(--font-serif); font-size: 0.95rem; color: #aaa; line-height: 1.5; border-top: 1px solid #222; padding-top: 10px; }
-
-.input-name { width: 100%; padding: 18px; border-radius: 16px; border: 1px solid #444; background: #1a1a1a; color: #fff; font-family: var(--font-ui); font-size: 1.1rem; margin-bottom: 15px; text-align: center; outline: none; }
-.input-name:focus { border-color: var(--accent-gold); }
-.btn { width: 100%; padding: 20px; border-radius: 100px; border: none; background: #fff; color: #000; font-weight: 800; cursor: pointer; text-transform: uppercase; font-family: var(--font-ui); letter-spacing: 1px; margin-top: 10px; font-size: 0.9rem; }
-.btn-save { background: var(--accent-gold); color: #000; box-shadow: 0 5px 20px rgba(255, 204, 0, 0.2); }
-.btn-review { background: #333; color: #fff; border: 1px solid #555; }
-.btn-close { background: transparent; color: #fff; border: 1px solid #333; margin: 20px; width: calc(100% - 40px); }
-
+.overlay { position: absolute; inset: 0; background: rgba(15,15,15,0.98); z-index: 1100; padding: 40px 30px; opacity: 0; pointer-events: none; border-radius: 32px; display: flex; flex-direction: column; justify-content: center; }
+.overlay.active { opacity: 1; pointer-events: auto; }
+.overlay-label { font-size: 0.8rem; color: var(--accent-gold); font-family: var(--font-code); margin-bottom: 15px; }
+.overlay-body { font-size: 1.1rem; line-height: 1.6; color: #ccc; margin-bottom: 30px; font-family: var(--font-serif); }
+.btn { width: 100%; padding: 20px; border-radius: 100px; border: none; background: #fff; color: #000; font-weight: 800; cursor: pointer; font-family: var(--font-ui); margin-top: 10px; }
 #loader { position: fixed; inset: 0; background: #000; z-index: 5000; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-weight: 900; font-size: 1.5rem; letter-spacing: 4px; color: var(--accent-gold); flex-direction: column; }
 #data-source { margin-top: 10px; font-size: 0.7rem; font-family: var(--font-code); color: #444; }
 </style>
 </head>
-
 <body>
 <div id="loader">ALCHEMIST<br><div id="data-source">INITIALIZING...</div></div>
-
-<div id="analysis-modal">
-    <div class="analysis-header">SESSION ANALYSIS</div>
-    <div class="analysis-scroll" id="analysis-content"></div>
-    <button class="btn btn-close" onclick="document.getElementById('analysis-modal').classList.remove('active')">CLOSE</button>
-</div>
-
-<div id="header">
-    <div class="header-meta"><span id="rank-ui">RANK: NOVICE</span><span id="xp-ui">0 XP</span></div>
-    <div class="progress-track"><div id="progress-bar"></div></div>
-</div>
-
+<div id="header"><div class="header-meta"><span id="rank-ui">NOVICE</span><span id="xp-ui">0 XP</span></div><div style="width:100%; height:4px; background:#222;"><div id="progress-bar"></div></div></div>
 <div id="stack"></div>
 
+<script src="questions.js"></script> 
+
 <script>
-// =========================================================
-// ✅ UPDATED WEB APP URL (V89.6)
-// =========================================================
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbyWNjpYR-DrK2Bfd0TJFgB5Jbg-qm6WgrKv_9V2IEaRHQVINCIVOq9zPPT-4OVaq-uA/exec";
+// REPLACE THIS URL:
+const ENDPOINT = "PASTE_YOUR_NEW_WEB_APP_URL_HERE"; 
 
-// =========================================================
-// OFFLINE BACKUP (Geopolitics 2026)
-// =========================================================
-const UNIVERSAL_DATA = [
-  { "dataset": "SET_A", "topic": "Global Power Shifts", "q_type": "CONCEPT", "weight": 1, "question_text": "Primary driver of 2026 geopolitics?", "hint": "💡 Think competition, not cooperation.", "explanation": "✅ Multipolar rivalry is correct because power is distributed among US, China, and regional blocs. ❌ Unipolar dominance is incorrect because no single hegemon dominates. ❌ Global unity is incorrect because conflicts persist.", "swipe_up_label": "Unipolar", "swipe_right_label": "Multipolar", "swipe_down_label": "HINT", "swipe_left_label": "Global unity", "correct": "RIGHT" }, 
-  { "dataset": "SET_A", "topic": "US-China Relations", "q_type": "CONCEPT", "weight": 1, "question_text": "Core US-China tension area?", "hint": "💡 Technology + security.", "explanation": "✅ Technology dominance is correct because chips, AI, and supply chains drive rivalry. ❌ Cultural conflict is incorrect because values differ but are secondary. ❌ Tourism is incorrect because it has minimal strategic impact.", "swipe_up_label": "Culture", "swipe_right_label": "Tourism", "swipe_down_label": "HINT", "swipe_left_label": "Technology", "correct": "LEFT" }, 
-  { "dataset": "SET_B", "topic": "Ukraine War", "q_type": "APPLICATION", "weight": 2, "question_text": "Ukraine war impacts Europe how?", "hint": "💡 Energy and security.", "explanation": "✅ Energy insecurity is correct because gas supply disruptions reshaped policy. ❌ Economic isolation is incorrect because EU trades globally. ❌ Military neutrality is incorrect because NATO expanded.", "swipe_up_label": "Isolation", "swipe_right_label": "Energy shock", "swipe_down_label": "HINT", "swipe_left_label": "Neutrality", "correct": "RIGHT" }, 
-  { "dataset": "SET_B", "topic": "Middle East", "q_type": "CONCEPT", "weight": 2, "question_text": "Key Middle East trend 2026?", "hint": "💡 Deals over wars.", "explanation": "✅ Regional normalization is correct because diplomacy outweighs direct conflict. ❌ Full-scale wars are incorrect due to deterrence. ❌ Political isolation is incorrect due to active mediation.", "swipe_up_label": "Wars", "swipe_right_label": "Isolation", "swipe_down_label": "HINT", "swipe_left_label": "Normalization", "correct": "LEFT" }, 
-  { "dataset": "SET_B", "topic": "Indo-Pacific", "q_type": "APPLICATION", "weight": 2, "question_text": "Why Indo-Pacific strategic?", "hint": "💡 Trade + navy.", "explanation": "✅ Sea lanes is correct because global trade flows through them. ❌ Climate zones are irrelevant strategically. ❌ Tourism hubs are economically minor.", "swipe_up_label": "Climate", "swipe_right_label": "Sea lanes", "swipe_down_label": "HINT", "swipe_left_label": "Tourism", "correct": "RIGHT" }, 
-  { "dataset": "SET_C", "topic": "Energy Politics", "q_type": "CONCEPT", "weight": 3, "question_text": "Energy transition causes what?", "hint": "💡 Power shifts.", "explanation": "✅ Resource realignment is correct because renewables alter dependencies. ❌ Energy peace is incorrect because competition remains. ❌ Oil monopoly is incorrect due to diversification.", "swipe_up_label": "Energy peace", "swipe_right_label": "Oil monopoly", "swipe_down_label": "HINT", "swipe_left_label": "Realignment", "correct": "LEFT" }, 
-  { "dataset": "SET_A", "topic": "Global South", "q_type": "CONCEPT", "weight": 1, "question_text": "Global South role increasing why?", "hint": "💡 Demography + markets.", "explanation": "✅ Economic growth is correct because markets and population drive influence. ❌ Military dominance is incorrect due to limited capacity. ❌ Ideological unity is incorrect due to diversity.", "swipe_up_label": "Military power", "swipe_right_label": "Growth", "swipe_down_label": "HINT", "swipe_left_label": "Ideology", "correct": "RIGHT" }, 
-  { "dataset": "SET_B", "topic": "Technology Geopolitics", "q_type": "APPLICATION", "weight": 2, "question_text": "Why chips are strategic?", "hint": "💡 Everything runs on them.", "explanation": "✅ Economic security is correct because semiconductors power defense and industry. ❌ Consumer fashion is incorrect. ❌ Cultural prestige is incorrect.", "swipe_up_label": "Fashion", "swipe_right_label": "Security", "swipe_down_label": "HINT", "swipe_left_label": "Prestige", "correct": "RIGHT" }, 
-  { "dataset": "SET_C", "topic": "Africa", "q_type": "CONCEPT", "weight": 3, "question_text": "Africa's 2026 geopolitical value?", "hint": "💡 Minerals + votes.", "explanation": "✅ Strategic resources is correct because minerals and demographics matter. ❌ Military alliances alone are incorrect. ❌ Isolation is incorrect due to engagement.", "swipe_up_label": "Isolation", "swipe_right_label": "Alliances", "swipe_down_label": "HINT", "swipe_left_label": "Resources", "correct": "LEFT" }, 
-  { "dataset": "SET_B", "topic": "Cyber Warfare", "q_type": "CONCEPT", "weight": 2, "question_text": "Cyber conflicts target mainly?", "hint": "💡 Systems, not soldiers.", "explanation": "✅ Infrastructure is correct because grids, banks, and networks are vulnerable. ❌ Battlefield troops is incorrect. ❌ Agriculture fields is incorrect.", "swipe_up_label": "Troops", "swipe_right_label": "Infrastructure", "swipe_down_label": "HINT", "swipe_left_label": "Farms", "correct": "RIGHT" }, 
-  { "dataset": "SET_A", "topic": "International Institutions", "q_type": "CONCEPT", "weight": 1, "question_text": "UN influence in 2026?", "hint": "💡 Limits exist.", "explanation": "✅ Reduced effectiveness is correct because veto politics block action. ❌ Total control is incorrect. ❌ Irrelevance is incorrect due to humanitarian role.", "swipe_up_label": "Total control", "swipe_right_label": "Irrelevant", "swipe_down_label": "HINT", "swipe_left_label": "Reduced role", "correct": "LEFT" }, 
-  { "dataset": "SET_C", "topic": "Climate Politics", "q_type": "APPLICATION", "weight": 3, "question_text": "Climate change fuels conflict by?", "hint": "💡 Scarcity matters.", "explanation": "✅ Resource scarcity is correct because water and food stress states. ❌ Cultural exchange is incorrect. ❌ Tourism decline is secondary.", "swipe_up_label": "Tourism loss", "swipe_right_label": "Scarcity", "swipe_down_label": "HINT", "swipe_left_label": "Culture", "correct": "RIGHT" }, 
-  { "dataset": "SET_B", "topic": "India's Foreign Policy", "q_type": "CONCEPT", "weight": 2, "question_text": "India's 2026 strategy?", "hint": "💡 Balance, not bloc.", "explanation": "✅ Strategic autonomy is correct because India avoids fixed alliances. ❌ Single bloc alignment is incorrect. ❌ Isolationism is incorrect.", "swipe_up_label": "Isolation", "swipe_right_label": "Autonomy", "swipe_down_label": "HINT", "swipe_left_label": "Bloc loyalty", "correct": "RIGHT" }, 
-  { "dataset": "SET_D", "topic": "Great Power Conflict", "q_type": "APPLICATION", "weight": 3, "question_text": "Why no direct superpower war?", "hint": "💡 High costs.", "explanation": "✅ Nuclear deterrence is correct because costs outweigh gains. ❌ Moral restraint is incorrect. ❌ Lack of weapons is incorrect.", "swipe_up_label": "No weapons", "swipe_right_label": "Deterrence", "swipe_down_label": "HINT", "swipe_left_label": "Morality", "correct": "RIGHT" }, 
-  { "dataset": "SET_C", "topic": "Economic Sanctions", "q_type": "CONCEPT", "weight": 3, "question_text": "Sanctions often cause?", "hint": "💡 Adaptation.", "explanation": "✅ Economic realignment is correct because states seek alternatives. ❌ Immediate collapse is incorrect. ❌ Global harmony is incorrect.", "swipe_up_label": "Collapse", "swipe_right_label": "Harmony", "swipe_down_label": "HINT", "swipe_left_label": "Realignment", "correct": "LEFT" }, 
-  { "dataset": "SET_A", "topic": "Media & Information", "q_type": "CONCEPT", "weight": 1, "question_text": "Disinformation used for?", "hint": "💡 Influence minds.", "explanation": "✅ Public manipulation is correct because narratives shape opinion. ❌ Entertainment is incorrect. ❌ Education is incorrect.", "swipe_up_label": "Education", "swipe_right_label": "Manipulation", "swipe_down_label": "HINT", "swipe_left_label": "Entertainment", "correct": "RIGHT" }, 
-  { "dataset": "SET_B", "topic": "Latin America", "q_type": "CONCEPT", "weight": 2, "question_text": "Latin America's key challenge?", "hint": "💡 Economy + stability.", "explanation": "✅ Economic inequality is correct because it fuels unrest. ❌ External invasion is incorrect. ❌ Climate neutrality is incorrect.", "swipe_up_label": "Invasion", "swipe_right_label": "Inequality", "swipe_down_label": "HINT", "swipe_left_label": "Neutrality", "correct": "RIGHT" }, 
-  { "dataset": "SET_D", "topic": "Future Outlook", "q_type": "APPLICATION", "weight": 3, "question_text": "2026 geopolitics most defined by?", "hint": "💡 Competition without war.", "explanation": "✅ Strategic rivalry is correct because states compete below war threshold. ❌ Global peace is incorrect. ❌ Total war is incorrect.", "swipe_up_label": "Global peace", "swipe_right_label": "Total war", "swipe_down_label": "HINT", "swipe_left_label": "Rivalry", "correct": "LEFT" }
-];
-/* --------------------------------------------------- */
-
-// ENGINE CONFIGURATION
-let RAW_DATA = [...UNIVERSAL_DATA];
-let POOL=[], MISTAKES=[], SCORE=0, isTransitioning=false;
-let MODE="DATASET_SELECT", CURRENT_DATASET="", CURRENT_TOPIC="", CURRENT_GENRE="";
-const CLAMP_DIST = 32; const OPACITY_DIST = 24; 
-
-// --- SMART TYPESETTER ---
-const smartFormat = t => { 
-    if(!t) return ""; 
-    let s = t.toString();
-    s = s.replace(/([A-Za-z)])(\d+)/g, '$1<sub>$2</sub>'); // Subscripts
-    s = s.replace(/(\d+|[)\]])([+\-])/g, '$1<sup>$2</sup>'); // Superscripts
-    s = s.replace(/->/g, '→').replace(/delta/gi, 'Δ').replace(/pi/gi, 'π'); // Symbols
-    s = s.replace(/\|\|/g, '<br><br>');
-    return s;
-};
+let POOL=[], SCORE=0, isTransitioning=false;
+const CLAMP=32, OPACITY=24;
 
 async function init(){
     const l = document.getElementById('loader');
     const status = document.getElementById('data-source');
     
-    // Try Cloud Sync
+    // 1. Try Cloud Fetch with 3s Timeout
     try {
-        const r = await fetch(ENDPOINT);
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 3000);
+        const r = await fetch(ENDPOINT, { signal: controller.signal });
         const json = await r.json();
+        clearTimeout(id);
+        
         if(Array.isArray(json) && json.length > 0) {
-            RAW_DATA = json; 
-            status.innerText = `SHEET CONNECTED: ${json.length} CARDS`; status.style.color = "#00ff00";
-        } else {
-            status.innerText = "SHEET EMPTY - USING OFFLINE DATA"; status.style.color = "orange";
+            window.LOCAL_DATA = json; // Overwrite local
+            status.innerText = "CLOUD SYNCED"; status.style.color="#00ff00";
         }
-    } catch(e) { 
-        status.innerText = `OFFLINE MODE: ${RAW_DATA.length} CARDS`; status.style.color = "orange"; 
+    } catch(e) {
+        status.innerText = "OFFLINE MODE"; status.style.color="orange";
     }
 
-    setTimeout(() => { l.remove(); renderDatasetSelect(); }, 1200);
-}
-
-// --- UNIVERSAL FILTERING LOGIC ---
-function attemptAutoStart(topic, genre){
-    const cleanDataset = (CURRENT_DATASET||"").trim().toLowerCase();
-    const cleanTopic = (topic||"").trim().toLowerCase();
-    
-    // 1. Try Specific Match
-    POOL = RAW_DATA.filter(q => {
-        const d = (q.dataset||"").trim().toLowerCase();
-        const t = (q.topic||"").trim().toLowerCase();
-        return d === cleanDataset && t === cleanTopic;
-    }).sort(() => Math.random() - .5);
-
-    // 2. Fallback: Dataset Only
-    if(POOL.length === 0) {
-        POOL = RAW_DATA.filter(q => (q.dataset||"").trim().toLowerCase() === cleanDataset).sort(() => Math.random() - .5);
-    }
-
-    // 3. Emergency: All Data
-    if(POOL.length === 0) POOL = [...RAW_DATA].sort(() => Math.random() - .5);
-
-    if(POOL.length > 0) { 
-        CURRENT_TOPIC = topic; CURRENT_GENRE = genre; renderNext(); return true; 
+    // 2. Load whatever data we have
+    if(window.LOCAL_DATA && window.LOCAL_DATA.length > 0) {
+        POOL = window.LOCAL_DATA.sort(()=>Math.random()-.5);
+        setTimeout(()=>{ l.remove(); renderNext(); }, 1000);
     } else {
-        alert("No questions found in JSON!"); renderDatasetSelect(); return false;
+        status.innerText = "NO DATA FOUND"; status.style.color="red";
     }
 }
-
-// --- UI RENDERERS ---
-
-function renderDatasetSelect(){
-    MODE="DATASET_SELECT"; const s=document.getElementById('stack'); s.innerHTML="";
-    const c=document.createElement('div'); c.className="card";
-    c.innerHTML=`
-        <div class="menu-container">
-            <div class="opt-top menu-opt">⬆️ SET A</div>
-            <div class="opt-left menu-opt">⬅️ SET B</div>
-            <div class="menu-center"><div class="card-q" style="margin:0">SELECT<br>DIFFICULTY</div></div>
-            <div class="opt-right menu-opt">SET C ➡️</div>
-            <div class="opt-bottom menu-opt">⬇️ SET D</div>
-        </div>
-        <div class="swipe-label sl-up">SET A (EASY)</div><div class="swipe-label sl-left">SET B (MEDIUM)</div>
-        <div class="swipe-label sl-right">SET C (HARD)</div><div class="swipe-label sl-down">SET D (EXPERT)</div>
-    `;
-    s.appendChild(c); bindPhysics(c);
-}
-
-function renderTopicSelect(dataset){
-    MODE="TOPIC_SELECT"; CURRENT_DATASET=dataset; const s=document.getElementById('stack'); s.innerHTML="";
-    const c=document.createElement('div'); c.className="card";
-    
-    // Generic topic selection (Works with fallbacks)
-    c.innerHTML=`
-        <div class="menu-container">
-            <div class="opt-top menu-opt">⬆️ TOPIC 1</div>
-            <div class="opt-left menu-opt">⬅️ TOPIC 2</div>
-            <div class="menu-center"><div class="card-q" style="margin:0">CHOOSE<br>TOPIC</div></div>
-            <div class="opt-right menu-opt">TOPIC 3 ➡️</div>
-            <div class="opt-bottom menu-opt">⬇️ TOPIC 4</div>
-        </div>
-        <div class="swipe-label sl-up">TOPIC 1</div><div class="swipe-label sl-left">TOPIC 2</div>
-        <div class="swipe-label sl-right">TOPIC 3</div><div class="swipe-label sl-down">TOPIC 4</div>
-    `;
-    s.appendChild(c); bindPhysics(c);
-}
-
-function renderGenreSelect(topic){
-    // Bypassing Genre Select to start faster (Universal Mode)
-    startQuiz(topic, "MIXED");
-}
-
-function startQuiz(topic, genre){ attemptAutoStart(topic, genre); }
 
 function renderNext(){
     const s=document.getElementById('stack'); s.innerHTML="";
-    if(!POOL.length){ renderEnd(); return; }
-    MODE="QUIZ"; const q = POOL.shift();
+    if(!POOL.length){ s.innerHTML='<div class="card"><div class="card-q">COMPLETE<br>'+SCORE+' XP</div><button class="btn" onclick="location.reload()">REPLAY</button></div>'; return; }
+    const q = POOL.shift();
     const c=document.createElement('div'); c.className="card";
-    c.innerHTML=`
-        <div class="card-q">${smartFormat(q.question_text)}</div>
-        <div class="swipe-label sl-up">${smartFormat(q.swipe_up_label)}</div>
-        <div class="swipe-label sl-left">${smartFormat(q.swipe_left_label)}</div>
-        <div class="swipe-label sl-right">${smartFormat(q.swipe_right_label)}</div>
-        <div class="swipe-label sl-down sl-down-hint"><div class="hint-icon">💡</div>${smartFormat(q.hint)}</div>
-    `;
+    c.innerHTML=`<div class="card-q">${q.question_text}</div>
+    <div class="swipe-label sl-up">${q.swipe_up_label}</div><div class="swipe-label sl-left">${q.swipe_left_label}</div>
+    <div class="swipe-label sl-right">${q.swipe_right_label}</div><div class="swipe-label sl-down sl-down-hint">💡 ${q.hint}</div>
+    <div class="overlay"><div class="overlay-label">LOGIC</div><div class="overlay-body">${q.explanation}</div><button class="btn" onclick="this.parentElement.classList.remove('active')">NEXT</button></div>`;
     s.appendChild(c); bindPhysics(c, q);
 }
 
-function renderEnd(){
-    MODE="SESSION_END"; const s=document.getElementById('stack'); s.innerHTML="";
-    const c=document.createElement('div'); c.className="card";
-    c.innerHTML=`
-        <div class="card-q" style="font-size:1.5rem">SESSION COMPLETE<br><span style="color:var(--accent-gold); font-size:3rem">${SCORE} XP</span></div>
-        <div style="width:100%; margin-top:20px; z-index:100; position:relative;">
-            <button class="btn btn-review" onclick="renderAnalysis()">REVIEW MISTAKES</button>
-            <input type="text" id="student-name" class="input-name" placeholder="ENTER YOUR NAME" style="margin-top:15px;">
-            <button class="btn btn-save" onclick="location.reload()">RESTART APP</button>
-        </div>`;
-    s.appendChild(c);
-}
-
-function renderAnalysis() {
-  const container = document.getElementById('analysis-content');
-  container.innerHTML = "";
-  if(MISTAKES.length === 0) {
-     container.innerHTML = "<div style='padding:20px; text-align:center; color:#666;'>PERFECT SCORE!</div>";
-  } else {
-     MISTAKES.forEach((q) => {
-        let html = `
-        <div class="mistake-card">
-           <div class="mistake-q">Q: ${smartFormat(q.question_text)}</div>
-           <div class="mistake-ans">Correct Answer: ${smartFormat(q.correct)}</div>
-           <div class="mistake-exp">📝 ${smartFormat(q.explanation)}</div>
-        </div>`;
-        container.innerHTML += html;
-     });
-  }
-  document.getElementById('analysis-modal').classList.add('active');
-}
-
 function bindPhysics(el, data){
-    let x=0, y=0, sx=0, sy=0, active=false, triggerDir=null;
+    let x=0, y=0, sx=0, sy=0, active=false, dir=null;
     const labels={up:el.querySelector('.sl-up'), dn:el.querySelector('.sl-down'), lt:el.querySelector('.sl-left'), rt:el.querySelector('.sl-right')};
     
-    const start=e=>{ if(isTransitioning) return; active=true; const p=e.touches?e.touches[0]:e; sx=p.clientX; sy=p.clientY; el.style.transition="none"; };
-    
+    const start=e=>{ if(isTransitioning || (el.querySelector('.overlay') && el.querySelector('.overlay').classList.contains('active'))) return; active=true; const p=e.touches?e.touches[0]:e; sx=p.clientX; sy=p.clientY; el.style.transition="none"; };
     const move=e=>{
-        if(!active)return; 
-        const p=e.touches?e.touches[0]:e;
-        const rawDx = p.clientX - sx; const rawDy = p.clientY - sy; const rawDist = Math.sqrt(rawDx*rawDx + rawDy*rawDy);
-        const opacity = Math.min(rawDist / OPACITY_DIST, 1);
-        let clampedDx = rawDx, clampedDy = rawDy;
-        if(rawDist > CLAMP_DIST){ const ratio = CLAMP_DIST / rawDist; clampedDx = rawDx * ratio; clampedDy = rawDy * ratio; }
-        
-        let ang = Math.atan2(-clampedDy, clampedDx)*(180/Math.PI); if(ang<0) ang+=360;
+        if(!active)return; const p=e.touches?e.touches[0]:e; const dx=p.clientX-sx, dy=p.clientY-sy, dist=Math.sqrt(dx*dx+dy*dy);
+        const op = Math.min(dist/OPACITY, 1);
+        let ang = Math.atan2(-dy, dx)*(180/Math.PI); if(ang<0) ang+=360;
         Object.values(labels).forEach(l=>{if(l)l.style.opacity=0;});
-        
-        if(rawDist > 5){
-            if(ang>=45&&ang<135) labels.up.style.opacity = opacity;
-            else if(ang>=135&&ang<225) labels.lt.style.opacity = opacity;
-            else if(ang>=225&&ang<315) labels.dn.style.opacity = opacity;
-            else labels.rt.style.opacity = opacity;
+        if(dist>5){
+            if(ang>=45&&ang<135) labels.up.style.opacity=op; else if(ang>=135&&ang<225) labels.lt.style.opacity=op;
+            else if(ang>=225&&ang<315) labels.dn.style.opacity=op; else labels.rt.style.opacity=op;
         }
-        x = clampedDx; y = clampedDy; 
-        requestAnimationFrame(()=>{ el.style.transform=`translate3d(${x}px,${y}px,0) rotate(${x/25}deg)`; });
-        if(rawDist >= CLAMP_DIST) triggerDir = (ang>=45&&ang<135)?"UP":(ang>=135&&ang<225)?"LEFT":(ang>=225&&ang<315)?"DOWN":"RIGHT"; else triggerDir = null;
+        el.style.transform=`translate3d(${dx}px,${dy}px,0) rotate(${dx/25}deg)`;
+        dir = (dist>=CLAMP) ? (ang>=45&&ang<135?"UP":ang>=135&&ang<225?"LEFT":ang>=225&&ang<315?"DOWN":"RIGHT") : null;
     };
-    
     const end=()=>{
         if(!active)return; active=false;
-        if(triggerDir){
-            if(MODE==="QUIZ" && triggerDir==="DOWN"){ 
-                el.style.transition="transform .3s"; 
-                el.style.transform="translate3d(0,0,0) rotate(0deg)"; 
-            } else {
-                handleAction(el, data, x, y, triggerDir);
+        if(dir){
+            if(dir==="DOWN"){ el.querySelector('.overlay').classList.add('active'); el.style.transition="transform .3s"; el.style.transform="translate3d(0,0,0) rotate(0deg)"; }
+            else { 
+                isTransitioning=true; 
+                if(dir===data.correct.toUpperCase()) SCORE+=10; 
+                el.style.transition="transform .4s ease-in"; el.style.transform=`translate3d(${dir==="LEFT"?-400:400}px,${dir==="UP"?-400:400}px,0)`; 
+                setTimeout(()=>{ el.remove(); isTransitioning=false; renderNext(); document.getElementById('xp-ui').innerText=SCORE+" XP"; }, 300);
             }
-        } else { el.style.transition="transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275)"; el.style.transform="translate3d(0,0,0) rotate(0deg)"; }
-        Object.values(labels).forEach(l=>{if(l)l.style.opacity=0;});
+        } else { el.style.transition="transform .2s"; el.style.transform="translate3d(0,0,0) rotate(0deg)"; }
+        Object.values(labels).forEach(l=>{l.style.opacity=0;});
     };
-    
-    el.onmousedown=start; window.onmousemove=move; window.onmouseup=end; el.ontouchstart=start; 
-    el.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); }, { passive: false });
-    el.ontouchend=end;
+    el.onmousedown=start; window.onmousemove=move; window.onmouseup=end; el.ontouchstart=start; el.ontouchmove=move; el.ontouchend=end;
 }
-
-function handleAction(el, data, x, y, dir){
-    isTransitioning=true;
-    if(MODE==="QUIZ"){ 
-        if(dir===data.correct.toUpperCase()){ SCORE+=(10*data.weight); } 
-        else { SCORE=Math.max(0, SCORE-5); MISTAKES.push(data); }
-        renderNext();
-    }
-    else if(MODE==="DATASET_SELECT"){ const map={UP:"SET_A", LEFT:"SET_B", RIGHT:"SET_C", DOWN:"SET_D"}; renderTopicSelect(map[dir]); }
-    else if(MODE==="TOPIC_SELECT"){ 
-        // Maps Directions to Generic Topic Groups
-        const map={UP:"Topic 1", LEFT:"Topic 2", RIGHT:"Topic 3", DOWN:"Topic 4"}; 
-        renderGenreSelect(map[dir]); 
-    }
-    else if(MODE==="SESSION_END"){ if(dir==="UP") location.reload(); }
-    
-    el.style.transition="transform .4s ease-in"; 
-    el.style.transform=`translate3d(${x*6}px,${y*6}px,0) rotate(${x/5}deg)`;
-    updateUI(); 
-    setTimeout(()=>{el.remove(); isTransitioning=false;}, 350);
-}
-function updateUI(){ document.getElementById('xp-ui').innerText=`${SCORE} XP`; document.getElementById('progress-bar').style.width=`${(SCORE%100)}%`; }
 window.onload=init;
 </script>
 </body>
