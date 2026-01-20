@@ -1,19 +1,16 @@
-This is V89.2 "Geopolitics Edition".
-I have replaced the placeholder data with your new 2026 Geopolitics dataset. The code is ready to run immediately.
-Delete everything in index.html and paste this:
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Alchemist V89.2 Geopolitics</title>
+<title>Geo-Politics 2026</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 
 <style>
-/* V89.2 CSS - UNIVERSAL STYLE */
+/* V89.4 UNIVERSAL STYLE */
 :root { 
     --bg-color: #000000; --card-bg: #121212; 
     --accent-gold: #ffcc00; --hint-blue: #4dabf7; --err-red: #ff4d4d;
@@ -22,22 +19,18 @@ Delete everything in index.html and paste this:
     --font-code: 'JetBrains Mono', monospace; 
 }
 
-/* APP RESET & PERFORMANCE */
 * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
 body { 
     margin: 0; height: 100vh; background: var(--bg-color); color: #fff; 
     font-family: var(--font-ui); overflow: hidden; 
-    touch-action: none; /* Disables browser gestures */
-    user-select: none; -webkit-user-select: none;
+    touch-action: none; user-select: none; -webkit-user-select: none;
 }
 
-/* HEADER */
 #header { width: 90%; margin: calc(20px + env(safe-area-inset-top)) auto 0; pointer-events: none; z-index: 10; position: relative; }
 .header-meta { display: flex; justify-content: space-between; font-family: var(--font-code); font-size: 0.75rem; color: #666; margin-bottom: 8px; letter-spacing: 0.5px; }
 .progress-track { width: 100%; height: 4px; background: #222; border-radius: 4px; }
 #progress-bar { height: 100%; background: var(--accent-gold); width: 0%; transition: width 0.4s ease; box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); }
 
-/* CARD STACK */
 #stack { position: relative; width: 90%; max-width: 400px; height: calc(100vh - 160px - env(safe-area-inset-top)); margin: 20px auto 0; perspective: 1200px; }
 
 .card { 
@@ -48,7 +41,6 @@ body {
     padding: 25px; touch-action: none;
 }
 
-/* SMART TEXT (Adapts to Math/Science/Prose) */
 .card-q { 
     font-family: var(--font-serif); 
     font-size: clamp(1.2rem, 4.5vw, 1.6rem); 
@@ -56,7 +48,6 @@ body {
     width: 100%; word-wrap: break-word; 
 }
 
-/* SWIPE LABELS */
 .swipe-label { 
     position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; 
     background: rgba(0,0,0,0.96); font-family: var(--font-ui); font-weight: 900; font-size: 2rem; 
@@ -68,7 +59,6 @@ body {
 }
 .hint-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
 
-/* MENU LAYOUT */
 .menu-container { position: absolute; inset: 0; padding: 20px; pointer-events: none; }
 .menu-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%; }
 .menu-opt { position: absolute; font-family: var(--font-ui); font-weight: 800; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: #666; transition: color 0.2s; }
@@ -78,7 +68,6 @@ body {
 .opt-left { top: 50%; left: 25px; transform: translateY(-50%); text-align: left; }
 .opt-right { top: 50%; right: 25px; transform: translateY(-50%); text-align: right; }
 
-/* ANALYSIS MODAL */
 #analysis-modal { position: absolute; inset: 0; background: #000; z-index: 2000; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding-top: env(safe-area-inset-top); }
 #analysis-modal.active { opacity: 1; pointer-events: auto; }
 .analysis-header { padding: 20px; text-align: center; border-bottom: 1px solid #333; font-family: var(--font-ui); color: var(--accent-gold); font-weight: 900; letter-spacing: 2px; }
@@ -88,7 +77,6 @@ body {
 .mistake-ans { font-family: var(--font-code); font-size: 0.8rem; color: var(--err-red); margin-bottom: 10px; text-transform: uppercase; }
 .mistake-exp { font-family: var(--font-serif); font-size: 0.95rem; color: #aaa; line-height: 1.5; border-top: 1px solid #222; padding-top: 10px; }
 
-/* CONTROLS */
 .input-name { width: 100%; padding: 18px; border-radius: 16px; border: 1px solid #444; background: #1a1a1a; color: #fff; font-family: var(--font-ui); font-size: 1.1rem; margin-bottom: 15px; text-align: center; outline: none; }
 .input-name:focus { border-color: var(--accent-gold); }
 .btn { width: 100%; padding: 20px; border-radius: 100px; border: none; background: #fff; color: #000; font-weight: 800; cursor: pointer; text-transform: uppercase; font-family: var(--font-ui); letter-spacing: 1px; margin-top: 10px; font-size: 0.9rem; }
@@ -119,10 +107,13 @@ body {
 
 <script>
 // =========================================================
-// UNIVERSAL DATASET SECTION
+// ✅ UPDATED APP URL
 // =========================================================
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbx0MOn2CEOHtwcraedSgmR_622esgwSAiWks3tNV51yc9XeKGrIip7lIxAu5iT460YT/exec";
 
-/* --- GEOPOLITICS 2026 DATA --- */
+// =========================================================
+// OFFLINE BACKUP (Geopolitics 2026)
+// =========================================================
 const UNIVERSAL_DATA = [
   { "dataset": "SET_A", "topic": "Global Power Shifts", "q_type": "CONCEPT", "weight": 1, "question_text": "Primary driver of 2026 geopolitics?", "hint": "💡 Think competition, not cooperation.", "explanation": "✅ Multipolar rivalry is correct because power is distributed among US, China, and regional blocs. ❌ Unipolar dominance is incorrect because no single hegemon dominates. ❌ Global unity is incorrect because conflicts persist.", "swipe_up_label": "Unipolar", "swipe_right_label": "Multipolar", "swipe_down_label": "HINT", "swipe_left_label": "Global unity", "correct": "RIGHT" }, 
   { "dataset": "SET_A", "topic": "US-China Relations", "q_type": "CONCEPT", "weight": 1, "question_text": "Core US-China tension area?", "hint": "💡 Technology + security.", "explanation": "✅ Technology dominance is correct because chips, AI, and supply chains drive rivalry. ❌ Cultural conflict is incorrect because values differ but are secondary. ❌ Tourism is incorrect because it has minimal strategic impact.", "swipe_up_label": "Culture", "swipe_right_label": "Tourism", "swipe_down_label": "HINT", "swipe_left_label": "Technology", "correct": "LEFT" }, 
@@ -166,12 +157,21 @@ async function init(){
     const l = document.getElementById('loader');
     const status = document.getElementById('data-source');
     
-    // Simulate loading
-    setTimeout(() => { 
-        status.innerText = `READY: ${RAW_DATA.length} CARDS`; 
-        status.style.color = "#00ff00";
-        setTimeout(() => { l.remove(); renderDatasetSelect(); }, 800);
-    }, 500);
+    // Try Cloud Sync
+    try {
+        const r = await fetch(ENDPOINT);
+        const json = await r.json();
+        if(Array.isArray(json) && json.length > 0) {
+            RAW_DATA = json; 
+            status.innerText = `SHEET CONNECTED: ${json.length} CARDS`; status.style.color = "#00ff00";
+        } else {
+            status.innerText = "SHEET EMPTY - USING OFFLINE DATA"; status.style.color = "orange";
+        }
+    } catch(e) { 
+        status.innerText = `OFFLINE MODE: ${RAW_DATA.length} CARDS`; status.style.color = "orange"; 
+    }
+
+    setTimeout(() => { l.remove(); renderDatasetSelect(); }, 1200);
 }
 
 // --- UNIVERSAL FILTERING LOGIC ---
@@ -186,12 +186,12 @@ function attemptAutoStart(topic, genre){
         return d === cleanDataset && t === cleanTopic;
     }).sort(() => Math.random() - .5);
 
-    // 2. Fallback: Dataset Only (If Topic not found)
+    // 2. Fallback: Dataset Only
     if(POOL.length === 0) {
         POOL = RAW_DATA.filter(q => (q.dataset||"").trim().toLowerCase() === cleanDataset).sort(() => Math.random() - .5);
     }
 
-    // 3. Emergency: All Data (If Dataset not found)
+    // 3. Emergency: All Data
     if(POOL.length === 0) POOL = [...RAW_DATA].sort(() => Math.random() - .5);
 
     if(POOL.length > 0) { 
@@ -224,9 +224,7 @@ function renderTopicSelect(dataset){
     MODE="TOPIC_SELECT"; CURRENT_DATASET=dataset; const s=document.getElementById('stack'); s.innerHTML="";
     const c=document.createElement('div'); c.className="card";
     
-    // Auto-detect available topics in this dataset
-    // (In a real universal app, this would dynamically generate buttons)
-    // For now, we use generic placeholders that trigger the "Dataset Only" fallback
+    // Generic topic selection (Works with fallbacks)
     c.innerHTML=`
         <div class="menu-container">
             <div class="opt-top menu-opt">⬆️ TOPIC 1</div>
@@ -366,4 +364,3 @@ window.onload=init;
 </script>
 </body>
 </html>
-
