@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Geo-Politics 2026</title>
+<title>Alchemist Live</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
-/* V91.0 MODULAR CSS */
+/* V91.1 LIVE CONNECTED STYLE */
 :root { --bg-color: #000000; --card-bg: #121212; --accent-gold: #ffcc00; --hint-blue: #4dabf7; --font-ui: 'Outfit', sans-serif; --font-serif: 'Libre Baskerville', serif; --font-code: 'JetBrains Mono', monospace; }
 * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
 body { margin: 0; height: 100vh; background: var(--bg-color); color: #fff; font-family: var(--font-ui); overflow: hidden; touch-action: none; user-select: none; }
@@ -36,11 +36,22 @@ body { margin: 0; height: 100vh; background: var(--bg-color); color: #fff; font-
 <script src="questions.js"></script> 
 
 <script>
-// REPLACE THIS URL:
-const ENDPOINT = "PASTE_YOUR_NEW_WEB_APP_URL_HERE"; 
+// =========================================================
+// ✅ YOUR LIVE DEPLOYMENT URL
+// =========================================================
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbyvuLk0rRUpuE-7s4M_iwJDrANmYkt4AJ4rPSEiXIYkPIWoeGuAG7fxBdwzOjziJ1PC/exec"; 
 
 let POOL=[], SCORE=0, isTransitioning=false;
 const CLAMP=32, OPACITY=24;
+
+const smartFormat = t => { 
+    if(!t) return ""; 
+    let s = t.toString();
+    s = s.replace(/([A-Za-z)])(\d+)/g, '$1<sub>$2</sub>'); 
+    s = s.replace(/(\d+|[)\]])([+\-])/g, '$1<sup>$2</sup>'); 
+    s = s.replace(/->/g, '→').replace(/delta/gi, 'Δ').replace(/pi/gi, 'π');
+    return s;
+};
 
 async function init(){
     const l = document.getElementById('loader');
@@ -76,10 +87,10 @@ function renderNext(){
     if(!POOL.length){ s.innerHTML='<div class="card"><div class="card-q">COMPLETE<br>'+SCORE+' XP</div><button class="btn" onclick="location.reload()">REPLAY</button></div>'; return; }
     const q = POOL.shift();
     const c=document.createElement('div'); c.className="card";
-    c.innerHTML=`<div class="card-q">${q.question_text}</div>
-    <div class="swipe-label sl-up">${q.swipe_up_label}</div><div class="swipe-label sl-left">${q.swipe_left_label}</div>
-    <div class="swipe-label sl-right">${q.swipe_right_label}</div><div class="swipe-label sl-down sl-down-hint">💡 ${q.hint}</div>
-    <div class="overlay"><div class="overlay-label">LOGIC</div><div class="overlay-body">${q.explanation}</div><button class="btn" onclick="this.parentElement.classList.remove('active')">NEXT</button></div>`;
+    c.innerHTML=`<div class="card-q">${smartFormat(q.question_text)}</div>
+    <div class="swipe-label sl-up">${smartFormat(q.swipe_up_label)}</div><div class="swipe-label sl-left">${smartFormat(q.swipe_left_label)}</div>
+    <div class="swipe-label sl-right">${smartFormat(q.swipe_right_label)}</div><div class="swipe-label sl-down sl-down-hint">💡 ${smartFormat(q.hint)}</div>
+    <div class="overlay"><div class="overlay-label">LOGIC</div><div class="overlay-body">${smartFormat(q.explanation)}</div><button class="btn" onclick="this.parentElement.classList.remove('active')">NEXT</button></div>`;
     s.appendChild(c); bindPhysics(c, q);
 }
 
