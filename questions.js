@@ -1,16 +1,107 @@
-// questions.js - Geopolitics 2026 Edition
-// FUTURE UPDATE INSTRUCTION: Just replace the data inside the [...] brackets below.
+import { createClient } from '@supabase/supabase-js';
 
-window.LOCAL_DATA = [
-  { "dataset": "SET_A", "topic": "Global Power", "q_type": "CONCEPT", "weight": 1, "question_text": "Primary driver of 2026 geopolitics?", "hint": "💡 Competition.", "explanation": "✅ Multipolar rivalry is correct. ❌ Unipolarity is over. ❌ Global unity is a myth.", "swipe_up_label": "Unipolar", "swipe_right_label": "Multipolar", "swipe_down_label": "HINT", "swipe_left_label": "Unity", "correct": "RIGHT" },
-  { "dataset": "SET_A", "topic": "US-China", "q_type": "CONCEPT", "weight": 1, "question_text": "Core US-China tension area?", "hint": "💡 Tech + Security.", "explanation": "✅ Tech dominance (chips/AI) drives rivalry. ❌ Culture is secondary.", "swipe_up_label": "Culture", "swipe_right_label": "Tourism", "swipe_down_label": "HINT", "swipe_left_label": "Tech War", "correct": "LEFT" },
-  { "dataset": "SET_B", "topic": "Ukraine", "q_type": "APPLICATION", "weight": 2, "question_text": "Ukraine war impact on Europe?", "hint": "💡 Security architecture.", "explanation": "✅ Energy insecurity reshaped policy. ❌ Economic isolation is false.", "swipe_up_label": "Isolation", "swipe_right_label": "Energy Shock", "swipe_down_label": "HINT", "swipe_left_label": "Neutrality", "correct": "RIGHT" },
-  { "dataset": "SET_B", "topic": "Middle East", "q_type": "CONCEPT", "weight": 2, "question_text": "Key Middle East trend?", "hint": "💡 Deals > War.", "explanation": "✅ Regional normalization via diplomacy. ❌ Total war is avoided.", "swipe_up_label": "Total War", "swipe_right_label": "Isolation", "swipe_down_label": "HINT", "swipe_left_label": "Normalization", "correct": "LEFT" },
-  { "dataset": "SET_B", "topic": "Indo-Pacific", "q_type": "APPLICATION", "weight": 2, "question_text": "Why is Indo-Pacific strategic?", "hint": "💡 Trade routes.", "explanation": "✅ Sea lanes control global trade flow. ❌ Tourism is minor.", "swipe_up_label": "Climate", "swipe_right_label": "Sea Lanes", "swipe_down_label": "HINT", "swipe_left_label": "Tourism", "correct": "RIGHT" },
-  { "dataset": "SET_C", "topic": "Energy", "q_type": "CONCEPT", "weight": 3, "question_text": "Energy transition causes?", "hint": "💡 Geopolitics.", "explanation": "✅ Resource realignment (minerals vs oil). ❌ Energy peace is unlikely.", "swipe_up_label": "Peace", "swipe_right_label": "Oil Monopoly", "swipe_down_label": "HINT", "swipe_left_label": "Realignment", "correct": "LEFT" },
-  { "dataset": "SET_A", "topic": "Global South", "q_type": "CONCEPT", "weight": 1, "question_text": "Global South rise due to?", "hint": "💡 Demographics.", "explanation": "✅ Economic/Population growth. ❌ Military dominance is weak.", "swipe_up_label": "Military", "swipe_right_label": "Growth", "swipe_down_label": "HINT", "swipe_left_label": "Ideology", "correct": "RIGHT" },
-  { "dataset": "SET_B", "topic": "Tech", "q_type": "APPLICATION", "weight": 2, "question_text": "Why are chips strategic?", "hint": "💡 Compute power.", "explanation": "✅ Economic/Military security depends on semi-conductors.", "swipe_up_label": "Fashion", "swipe_right_label": "Security", "swipe_down_label": "HINT", "swipe_left_label": "Prestige", "correct": "RIGHT" },
-  { "dataset": "SET_C", "topic": "Africa", "q_type": "CONCEPT", "weight": 3, "question_text": "Africa's 2026 value?", "hint": "💡 Critical Minerals.", "explanation": "✅ Strategic resources (Cobalt/Lithium). ❌ Isolation is false.", "swipe_up_label": "Isolation", "swipe_right_label": "Alliances", "swipe_down_label": "HINT", "swipe_left_label": "Resources", "correct": "LEFT" },
-  { "dataset": "SET_B", "topic": "Cyber", "q_type": "CONCEPT", "weight": 2, "question_text": "Cyber warfare target?", "hint": "💡 Grid/Banks.", "explanation": "✅ Critical Infrastructure is the main target. ❌ Troops are secondary.", "swipe_up_label": "Troops", "swipe_right_label": "Infrastructure", "swipe_down_label": "HINT", "swipe_left_label": "Farms", "correct": "RIGHT" }
-];
+// 1. Backend Initialization [5]
+const supabase = createClient(VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY);
 
+const GENERATOR = {
+    // Logic Frames ( dna for the autonomous engine )
+    frames: {
+        ORGANIC: (cfg) => {
+            const isHBr = Math.random() > 0.5;
+            const s = cfg.substrates[Math.floor(Math.random() * cfg.substrates.length)];
+            return {
+                id: `ORG_${Date.now()}`,
+                question: `Reaction: $${s.formula}$ with $${isHBr? 'HBr' : 'HCl'}$ + **Peroxide**.`,
+                up: `${isHBr? '2-Bromopropane' : '1-Chloropropane'} (Trap)`,
+                left: "1,2-Dihaloalkane (Misfit)",
+                right: `${isHBr? '1-Bromopropane' : '2-Chloropropane'} (Solution)`,
+                map: isHBr? "Peroxide effect only works with HBr (Radical)." : "HCl stays Markovnikov."
+            };
+        }
+    }
+};
+
+const APP = {
+    deck:,
+    idx: 0,
+    answers:,
+    currentMode: 'FULL_TEST',
+
+    async init() {
+        // Fetch Logic Frames from Supabase
+        const { data } = await supabase.from('question_templates').select('*');
+        this.config = data;
+        this.showView('view-start');
+    },
+
+    start(topicKey) {
+        this.currentMode = topicKey;
+        this.deck =;
+        // Generate 15 non-repetitive questions on the fly [turn 19]
+        for(let i=0; i<15; i++) {
+            const frameCfg = this.config.find(f => f.topic === topicKey) |
+
+| this.config;
+            this.deck.push(GENERATOR.frames[topicKey](frameCfg.config));
+        }
+        this.idx = 0;
+        this.answers =;
+        this.showView('view-game');
+        this.render();
+    },
+
+    // 3D Swipe Physics Logic [8, 6, 9]
+    handleSwipe(dir) {
+        const currentQ = this.deck[this.idx];
+        const startTime = this.lastRenderTime;
+        
+        this.answers.push({
+            id: currentQ.id,
+            choice: dir,
+            latency: Date.now() - startTime,
+            isCorrect: dir === 'RIGHT'
+        });
+
+        if (dir === 'DOWN') {
+            this.triggerLogicPivot(currentQ.map);
+        } else {
+            this.idx++;
+            this.idx < this.deck.length? this.render() : this.complete();
+        }
+    },
+
+    async submitScore() {
+        const studentName = document.getElementById('student-name').value;
+        if (!studentName) return alert("Enter name!");
+
+        // Sync to Supabase Audit/LOGS table
+        const { error } = await supabase.from('user_progress').insert(
+            this.answers.map(ans => ({
+                student_name: studentName,
+                question_id: ans.id,
+                latency: ans.latency,
+                choice: ans.choice
+            }))
+        );
+        
+        if (!error) document.getElementById('name-zone').innerText = "Rank Updated ✓";
+    },
+
+    startReview() {
+        // Targeted Review: Only concepts user failed [turn 30]
+        const failures = this.answers.filter(a =>!a.isCorrect).map(a => a.id);
+        if (failures.length === 0) return alert("Nothing to review!");
+        
+        this.deck = this.deck.filter(q => failures.includes(q.id));
+        this.idx = 0;
+        this.answers =;
+        this.showView('view-game');
+        this.render();
+    }
+};
+
+// UI Router
+APP.showView = (id) => {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+};
