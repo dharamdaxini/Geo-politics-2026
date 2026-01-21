@@ -1,132 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Alchemist Live</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-<style>
-/* V91.1 LIVE CONNECTED STYLE */
-:root { --bg-color: #000000; --card-bg: #121212; --accent-gold: #ffcc00; --hint-blue: #4dabf7; --font-ui: 'Outfit', sans-serif; --font-serif: 'Libre Baskerville', serif; --font-code: 'JetBrains Mono', monospace; }
-* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; height: 100vh; background: var(--bg-color); color: #fff; font-family: var(--font-ui); overflow: hidden; touch-action: none; user-select: none; }
-#header { width: 90%; margin: calc(20px + env(safe-area-inset-top)) auto 0; pointer-events: none; z-index: 10; position: relative; }
-.header-meta { display: flex; justify-content: space-between; font-family: var(--font-code); font-size: 0.75rem; color: #666; margin-bottom: 8px; }
-#progress-bar { height: 4px; background: var(--accent-gold); width: 0%; transition: width 0.4s ease; box-shadow: 0 0 12px rgba(255, 204, 0, 0.4); border-radius: 4px; }
-#stack { position: relative; width: 92%; max-width: 400px; height: calc(100vh - 160px - env(safe-area-inset-top)); margin: 25px auto 0; perspective: 1200px; }
-.card { position: absolute; width: 100%; height: 100%; background: var(--card-bg); border-radius: 32px; border: 1px solid #333; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 25px 60px rgba(0,0,0,0.9); will-change: transform; padding: 30px; }
-.card-q { font-family: var(--font-serif); font-size: clamp(1.3rem, 5vw, 1.8rem); font-weight: 700; text-align: center; color: #e0e0e0; width: 100%; word-wrap: break-word; }
-.swipe-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.96); font-family: var(--font-ui); font-weight: 900; font-size: 2.2rem; text-transform: uppercase; border-radius: 32px; opacity: 0; pointer-events: none; z-index:100; padding: 20px; text-align: center; }
-.sl-down-hint { color: var(--hint-blue) !important; font-size: 1.4rem !important; text-transform: none !important; font-family: var(--font-serif) !important; }
-.hint-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
-.overlay { position: absolute; inset: 0; background: rgba(15,15,15,0.98); z-index: 1100; padding: 40px 30px; opacity: 0; pointer-events: none; border-radius: 32px; display: flex; flex-direction: column; justify-content: center; }
-.overlay.active { opacity: 1; pointer-events: auto; }
-.overlay-label { font-size: 0.8rem; color: var(--accent-gold); font-family: var(--font-code); margin-bottom: 15px; }
-.overlay-body { font-size: 1.1rem; line-height: 1.6; color: #ccc; margin-bottom: 30px; font-family: var(--font-serif); }
-.btn { width: 100%; padding: 20px; border-radius: 100px; border: none; background: #fff; color: #000; font-weight: 800; cursor: pointer; font-family: var(--font-ui); margin-top: 10px; }
-#loader { position: fixed; inset: 0; background: #000; z-index: 5000; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-weight: 900; font-size: 1.5rem; letter-spacing: 4px; color: var(--accent-gold); flex-direction: column; }
-#data-source { margin-top: 10px; font-size: 0.7rem; font-family: var(--font-code); color: #444; }
-</style>
-</head>
-<body>
-<div id="loader">ALCHEMIST<br><div id="data-source">INITIALIZING...</div></div>
-<div id="header"><div class="header-meta"><span id="rank-ui">NOVICE</span><span id="xp-ui">0 XP</span></div><div style="width:100%; height:4px; background:#222;"><div id="progress-bar"></div></div></div>
-<div id="stack"></div>
-
-<script src="questions.js"></script> 
-
-<script>
-// =========================================================
-// ✅ YOUR LIVE DEPLOYMENT URL
-// =========================================================
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbyvuLk0rRUpuE-7s4M_iwJDrANmYkt4AJ4rPSEiXIYkPIWoeGuAG7fxBdwzOjziJ1PC/exec"; 
-
-let POOL=[], SCORE=0, isTransitioning=false;
-const CLAMP=32, OPACITY=24;
-
-const smartFormat = t => { 
-    if(!t) return ""; 
-    let s = t.toString();
-    s = s.replace(/([A-Za-z)])(\d+)/g, '$1<sub>$2</sub>'); 
-    s = s.replace(/(\d+|[)\]])([+\-])/g, '$1<sup>$2</sup>'); 
-    s = s.replace(/->/g, '→').replace(/delta/gi, 'Δ').replace(/pi/gi, 'π');
-    return s;
-};
-
-async function init(){
-    const l = document.getElementById('loader');
-    const status = document.getElementById('data-source');
-    
-    // 1. Try Cloud Fetch with 3s Timeout
-    try {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), 3000);
-        const r = await fetch(ENDPOINT, { signal: controller.signal });
-        const json = await r.json();
-        clearTimeout(id);
+<div id="view-summary" class="view">
+    <div class="glass-panel" style="padding: 3rem; border-radius: 40px; text-align: center; width: 85%; max-width: 400px;">
+        <div class="meta">SESSION COMPLETE</div>
+        <div id="score-report" style="font-size: 3.5rem; font-weight: 800; margin: 1.5rem 0; color: var(--accent);">0/0</div>
         
-        if(Array.isArray(json) && json.length > 0) {
-            window.LOCAL_DATA = json; // Overwrite local
-            status.innerText = "CLOUD SYNCED"; status.style.color="#00ff00";
-        }
-    } catch(e) {
-        status.innerText = "OFFLINE MODE"; status.style.color="orange";
-    }
+        <div id="name-zone" style="margin-bottom: 2rem;">
+            <input type="text" id="student-name" placeholder="Enter Name for Rank" 
+                   style="background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: white; width: 100%; margin-bottom: 10px; text-align: center;">
+            <button onclick="APP.submitScore()" class="btn-primary" style="width: 100%; font-size: 0.9rem; padding: 10px;">SUBMIT TO RANK</button>
+        </div>
 
-    // 2. Load whatever data we have
-    if(window.LOCAL_DATA && window.LOCAL_DATA.length > 0) {
-        POOL = window.LOCAL_DATA.sort(()=>Math.random()-.5);
-        setTimeout(()=>{ l.remove(); renderNext(); }, 1000);
-    } else {
-        status.innerText = "NO DATA FOUND"; status.style.color="red";
-    }
-}
-
-function renderNext(){
-    const s=document.getElementById('stack'); s.innerHTML="";
-    if(!POOL.length){ s.innerHTML='<div class="card"><div class="card-q">COMPLETE<br>'+SCORE+' XP</div><button class="btn" onclick="location.reload()">REPLAY</button></div>'; return; }
-    const q = POOL.shift();
-    const c=document.createElement('div'); c.className="card";
-    c.innerHTML=`<div class="card-q">${smartFormat(q.question_text)}</div>
-    <div class="swipe-label sl-up">${smartFormat(q.swipe_up_label)}</div><div class="swipe-label sl-left">${smartFormat(q.swipe_left_label)}</div>
-    <div class="swipe-label sl-right">${smartFormat(q.swipe_right_label)}</div><div class="swipe-label sl-down sl-down-hint">💡 ${smartFormat(q.hint)}</div>
-    <div class="overlay"><div class="overlay-label">LOGIC</div><div class="overlay-body">${smartFormat(q.explanation)}</div><button class="btn" onclick="this.parentElement.classList.remove('active')">NEXT</button></div>`;
-    s.appendChild(c); bindPhysics(c, q);
-}
-
-function bindPhysics(el, data){
-    let x=0, y=0, sx=0, sy=0, active=false, dir=null;
-    const labels={up:el.querySelector('.sl-up'), dn:el.querySelector('.sl-down'), lt:el.querySelector('.sl-left'), rt:el.querySelector('.sl-right')};
-    
-    const start=e=>{ if(isTransitioning || (el.querySelector('.overlay') && el.querySelector('.overlay').classList.contains('active'))) return; active=true; const p=e.touches?e.touches[0]:e; sx=p.clientX; sy=p.clientY; el.style.transition="none"; };
-    const move=e=>{
-        if(!active)return; const p=e.touches?e.touches[0]:e; const dx=p.clientX-sx, dy=p.clientY-sy, dist=Math.sqrt(dx*dx+dy*dy);
-        const op = Math.min(dist/OPACITY, 1);
-        let ang = Math.atan2(-dy, dx)*(180/Math.PI); if(ang<0) ang+=360;
-        Object.values(labels).forEach(l=>{if(l)l.style.opacity=0;});
-        if(dist>5){
-            if(ang>=45&&ang<135) labels.up.style.opacity=op; else if(ang>=135&&ang<225) labels.lt.style.opacity=op;
-            else if(ang>=225&&ang<315) labels.dn.style.opacity=op; else labels.rt.style.opacity=op;
-        }
-        el.style.transform=`translate3d(${dx}px,${dy}px,0) rotate(${dx/25}deg)`;
-        dir = (dist>=CLAMP) ? (ang>=45&&ang<135?"UP":ang>=135&&ang<225?"LEFT":ang>=225&&ang<315?"DOWN":"RIGHT") : null;
-    };
-    const end=()=>{
-        if(!active)return; active=false;
-        if(dir){
-            if(dir==="DOWN"){ el.querySelector('.overlay').classList.add('active'); el.style.transition="transform .3s"; el.style.transform="translate3d(0,0,0) rotate(0deg)"; }
-            else { 
-                isTransitioning=true; 
-                if(dir===data.correct.toUpperCase()) SCORE+=10; 
-                el.style.transition="transform .4s ease-in"; el.style.transform=`translate3d(${dir==="LEFT"?-400:400}px,${dir==="UP"?-400:400}px,0)`; 
-                setTimeout(()=>{ el.remove(); isTransitioning=false; renderNext(); document.getElementById('xp-ui').innerText=SCORE+" XP"; }, 300);
-            }
-        } else { el.style.transition="transform .2s"; el.style.transform="translate3d(0,0,0) rotate(0deg)"; }
-        Object.values(labels).forEach(l=>{l.style.opacity=0;});
-    };
-    el.onmousedown=start; window.onmousemove=move; window.onmouseup=end; el.ontouchstart=start; el.ontouchmove=move; el.ontouchend=end;
-}
-window.onload=init;
-</script>
-</body>
-</html>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <button id="review-btn" onclick="APP.startReview()" class="btn-secondary" style="background: var(--card-glass); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 15px;">REVIEW ERRORS</button>
+            <button onclick="location.reload()" class="btn-secondary" style="background: var(--card-glass); border: 1px solid var(--border); color: white; padding: 15px; border-radius: 15px;">RESET SESSION</button>
+        </div>
+    </div>
+</div>
